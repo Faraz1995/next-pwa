@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "doc",
-  "short_name": "doc",
+  "name": "faraz",
+  "short_name": "faraz",
   "icons": [
     {
       "src": "/icon-192x192.png",
