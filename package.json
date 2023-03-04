@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev-https": "local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 4002 --target 3000",
+    "dev-ssl": "node scripts/next-dev-ssl.js & next dev -p 3001",
+    "dev-https": "local-ssl-proxy --key key.pem --cert cert.pem --source 4002 --target 3000",
     "build": "next build",
     "start": "next start",
     "export": "next export",
@@ -13,6 +14,7 @@
   "dependencies": {
     "eslint": "8.34.0",
     "eslint-config-next": "13.2.1",
+    "http-proxy": "^1.18.1",
     "next": "10.0.8",
     "next-pwa": "^5.6.0",
     "react": "17.0.1",
