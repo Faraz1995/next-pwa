@@ -7,6 +7,7 @@
     "dev-https": "local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 4001 --target 3000",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "lint": "next lint"
   },
   "dependencies": {
