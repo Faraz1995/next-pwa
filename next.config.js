@@ -1,7 +1,5 @@
 const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true
+  dest: 'public'
 })
 module.exports = withPWA({
   // next.js config
