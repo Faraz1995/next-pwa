@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import axios from 'axios'
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 
 export default function Home() {
+  const [status, setStatus] = useState('')
   let crypto
   let subtle
   if (typeof window !== 'undefined') {
@@ -128,6 +130,7 @@ export default function Home() {
           data: JSON.stringify({ credential: registerFingerData }) // This is the body part
         })
       } catch (error) {
+        setStatus(JSON.stringify(error))
         console.log(error)
       }
     } catch (error) {
@@ -179,23 +182,7 @@ export default function Home() {
             Get started by editing&nbsp;
             <code className={styles.code}>src/pages/index.js</code>
           </p>
-          <div>
-            <a
-              href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              By{' '}
-              <img
-                src='/vercel.svg'
-                alt='Vercel Logo'
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
+          <div>{status}</div>
         </div>
         <div className={styles.btnBox}>
           <button onClick={register}>register finger</button>
