@@ -130,12 +130,22 @@ export default function Home() {
       }
       try {
         setStatus('register')
-        const registerRes = await axios({
-          method: 'post',
-          url: 'api/v1/pwa/register',
-          headers: {},
-          data: JSON.stringify({ credential: registerFingerData }) // This is the body part
+        // const registerRes = await axios({
+        //   method: 'post',
+        //   url: 'api/v1/pwa/register',
+        //   headers: {},
+        //   data: JSON.stringify({ credential: registerFingerData }) // This is the body part
+        // })
+
+        const res = await fetch(`api/v1/pwa/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ credential: registerFingerData }),
+          credentials: 'include'
         })
+        console.log(res)
         setStatus('res****')
       } catch (error) {
         setStatus(JSON.stringify(error))
