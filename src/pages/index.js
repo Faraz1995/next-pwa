@@ -109,6 +109,7 @@ export default function Home() {
 
     console.log(danny)
     try {
+      setStatus('before create')
       const credential = await navigator.credentials.create({ publicKey: danny })
       console.log(credential)
       const credentialId = bufferToBase64(credential.rawId)
@@ -137,6 +138,7 @@ export default function Home() {
         console.log(error)
       }
     } catch (error) {
+      setStatus(JSON.stringify(error))
       console.error('registration failed', error)
     }
   }
