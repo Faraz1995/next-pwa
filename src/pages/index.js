@@ -89,18 +89,26 @@ export default function Home() {
   const register = async () => {
     console.log('register')
     const res = await (await axios.get('api/v1/pwa/register')).data
-    const createOptions = { ...res.registrationOptions }
-    console.log('create options************', createOptions)
-    createOptions.publicKey.challenge = new Uint8Array(
-      createOptions.publicKey.challenge
+    const danny = { ...res.registrationOptions }
+    const defaultOptions = { ...res.createCredentialDefaultArgs }
+    // console.log('create options************', createOptions)
+    defaultOptions.publicKey.challenge = new Uint8Array(
+      defaultOptions.publicKey.challenge
     ).buffer
-    createOptions.publicKey.user.id = new Uint8Array(
-      createOptions.publicKey.user.id
+    defaultOptions.publicKey.user.id = new Uint8Array(
+      defaultOptions.publicKey.user.id
     ).buffer
+    console.log('default options***********', defaultOptions)
+    danny.challenge = new Uint8Array(danny.challenge.data)
+    danny.user.id = new Uint8Array(danny.user.id.data)
+    danny.user.name = 'pwa@example.com'
+    danny.user.displayName = 'What PWA Can Do Today'
+    console.log('danny************', danny)
+    const credential = await navigator.credentials.create(defaultOptions)
 
-    console.log(createOptions)
+    console.log(danny)
     try {
-      const credential = await navigator.credentials.create(createOptions)
+      // const credential = await navigator.credentials.create(createOptions)
       // console.log(credential)
     } catch (error) {
       console.error('registration failed', error)
