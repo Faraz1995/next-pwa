@@ -107,7 +107,7 @@ export default function Home() {
 
     console.log(danny)
     try {
-      const credential = await navigator.credentials.create(defaultOptions)
+      const credential = await navigator.credentials.create({ publicKey: danny })
       console.log(credential)
       const credentialId = bufferToBase64(credential.rawId)
       console.log('id**************', credentialId)
