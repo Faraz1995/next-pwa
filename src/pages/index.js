@@ -11,6 +11,10 @@ export default function Home() {
     crypto = window && (window.crypto || window.msCrypto) // for IE 11 compatibility
     subtle = crypto.subtle
   }
+
+  const bufferToBase64 = (buffer) => btoa(String.fromCharCode(...new Uint8Array(buffer)))
+  const base64ToBuffer = (base64) => Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
+
   const locallyGenerate = () => {
     // sample arguments for registration
     const createCredentialDefaultArgs = {
