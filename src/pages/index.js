@@ -111,9 +111,9 @@ export default function Home() {
     try {
       setStatus('before create')
       const credential = await navigator.credentials.create({ publicKey: danny })
-      console.log(credential)
+      setStatus('credential***' + JSON.stringify(credential))
       const credentialId = bufferToBase64(credential.rawId)
-      setStatus(id)
+      setStatus('id***' + JSON.stringify(credentialId))
       console.log('id**************', credentialId)
       const registerFingerData = {
         rawId: credentialId,
@@ -138,7 +138,7 @@ export default function Home() {
         console.log(error)
       }
     } catch (error) {
-      setStatus(JSON.stringify(error))
+      setStatus('error' + JSON.stringify(error))
       console.error('registration failed', error)
     }
   }
