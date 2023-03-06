@@ -125,7 +125,7 @@ export default function Home() {
           method: 'post',
           url: 'api/v1/pwa/register',
           headers: {},
-          data: JSON.stringify({ credential: data }) // This is the body part
+          data: JSON.stringify({ credential: registerFingerData }) // This is the body part
         })
       } catch (error) {
         console.log(error)
