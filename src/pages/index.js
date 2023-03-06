@@ -88,7 +88,7 @@ export default function Home() {
 
   const register = async () => {
     console.log('register')
-    const res = await (await axios.get('api/v1/pwa/register')).data
+    const res = await (await axios.get('api/v1/pwa/register-option')).data
     const danny = { ...res.registrationOptions }
     const defaultOptions = { ...res.createCredentialDefaultArgs }
     // console.log('create options************', createOptions)
@@ -104,12 +104,32 @@ export default function Home() {
     danny.user.name = 'pwa@example.com'
     danny.user.displayName = 'What PWA Can Do Today'
     console.log('danny************', danny)
-    const credential = await navigator.credentials.create(defaultOptions)
 
     console.log(danny)
     try {
-      // const credential = await navigator.credentials.create(createOptions)
-      // console.log(credential)
+      const credential = await navigator.credentials.create(defaultOptions)
+      console.log(credential)
+      const credentialId = bufferToBase64(credential.rawId)
+      console.log('id**************', credentialId)
+      const registerFingerData = {
+        rawId: credentialId,
+        response: {
+          attestationObject: bufferToBase64(credential.response.attestationObject),
+          clientDataJSON: bufferToBase64(credential.response.clientDataJSON),
+          id: credential.id,
+          type: credential.type
+        }
+      }
+      try {
+        const registerRes = await axios({
+          method: 'post',
+          url: 'api/v1/pwa/register',
+          headers: {},
+          data: JSON.stringify({ credential: data }) // This is the body part
+        })
+      } catch (error) {
+        console.log(error)
+      }
     } catch (error) {
       console.error('registration failed', error)
     }
