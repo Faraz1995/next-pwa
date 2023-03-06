@@ -5,4 +5,12 @@ const withPWA = require('next-pwa')({
 })
 module.exports = withPWA({
   // next.js config
+  async rewrites () {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://gold.adanic.me/api/:path*'
+      }
+    ]
+  }
 })
