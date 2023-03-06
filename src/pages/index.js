@@ -123,12 +123,14 @@ export default function Home() {
         }
       }
       try {
+        setStatus('register')
         const registerRes = await axios({
           method: 'post',
           url: 'api/v1/pwa/register',
           headers: {},
           data: JSON.stringify({ credential: registerFingerData }) // This is the body part
         })
+        setStatus('res****')
       } catch (error) {
         setStatus(JSON.stringify(error))
         console.log(error)
