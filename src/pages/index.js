@@ -4,7 +4,7 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 
 export default function Home() {
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState('start')
   let crypto
   let subtle
   if (typeof window !== 'undefined') {
@@ -112,6 +112,7 @@ export default function Home() {
       const credential = await navigator.credentials.create({ publicKey: danny })
       console.log(credential)
       const credentialId = bufferToBase64(credential.rawId)
+      setStatus(id)
       console.log('id**************', credentialId)
       const registerFingerData = {
         rawId: credentialId,
