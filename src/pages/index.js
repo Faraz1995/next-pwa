@@ -238,7 +238,7 @@ console.log('final authn options***********',authnOptions);
 
     const dataRes = await verifyRes.data
 
-    console.log(JSON.stringify(dataRes));
+    console.log(dataRes.msg);
     setStatus(verifyRes)
   }
   return (
