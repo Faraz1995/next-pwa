@@ -207,6 +207,28 @@ console.log('final authn options***********',authnOptions);
     const credential = await navigator.credentials.get({
       publicKey: authnOptions
     });
+    const data = {
+      rawId: bufferToBase64(credential.rawId),
+      response: {
+        authenticatorData: bufferToBase64(credential.response.authenticatorData),
+        signature: bufferToBase64(credential.response.signature),
+        userHandle: bufferToBase64(credential.response.userHandle),
+        clientDataJSON: bufferToBase64(credential.response.clientDataJSON),
+        id: credential.id,
+        type: credential.type
+      }
+    };
+    const verifyRes = await axios({
+      method:"POST",
+      url:"api/v1/pwa/verify",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({credential: data}),
+    })
+
+    console.log(verifyRes);
+    setStatus(JSON.stringify(verifyRes))
   }
   return (
     <>
