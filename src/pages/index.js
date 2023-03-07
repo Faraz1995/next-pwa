@@ -219,7 +219,7 @@ console.log('final authn options***********',authnOptions);
       }
     };
     setStatus('before verify call')
-    const verifyRes = (await fetch(`api/v1/pwa/verify`, {
+    const verifyRes = (await fetch(`api/v1/pwa/verify-finger`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
