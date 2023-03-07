@@ -219,14 +219,23 @@ console.log('final authn options***********',authnOptions);
       }
     };
     setStatus('before verify call')
-    const verifyRes = await axios({
-      method:"POST",
-      url:"api/v1/pwa/verify",
+    const verifyRes = (await fetch(`api/v1/pwa/verify`, {
+      method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
-      body:JSON.stringify({credential: data}),
-    })
+      body: JSON.stringify({credential: data}),
+      credentials: 'include'
+    }));
+    // const verifyRes = await axios({
+    //   method:"POST",
+    //   url:"api/v1/pwa/verify",
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body:JSON.stringify({credential: data}),
+    // })
 
     console.log(verifyRes);
     setStatus(JSON.stringify(verifyRes))
