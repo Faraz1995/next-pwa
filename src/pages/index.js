@@ -230,7 +230,7 @@ console.log('final authn options***********',authnOptions);
 
 
 
-    setStatus('result is'+JSON.stringify(verifyRes.body.data))
+    setStatus('result is'+JSON.stringify(verifyRes.json()))
   }
   return (
     <>
