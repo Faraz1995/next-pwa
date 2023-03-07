@@ -229,7 +229,7 @@ export default function Home() {
     })
       .then((res) => {
         
-        setStatus('then***********'+res.data.msg)
+        setStatus('then***********'+res.data)
       })
       .catch((e) => {
         setStatus('error in fetch')
