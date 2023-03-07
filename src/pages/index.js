@@ -119,6 +119,7 @@ export default function Home() {
       const credentialId = bufferToBase64(credential.rawId)
       setStatus('id***' + JSON.stringify(credentialId))
       console.log('id**************', credentialId)
+      localStorage.setItem('credential', JSON.stringify({credentialId}))
       const registerFingerData = {
         rawId: credentialId,
         response: {
@@ -184,8 +185,28 @@ export default function Home() {
     const publicKeyPem = arrayBufferToPem(publicKeyArrayBuffer, 'PUBLIC KEY')
     console.log(publicKeyPem)
   }
-  const validate = () => {
+  const validate = async () => {
     console.log('validate')
+    const validationOption = await axios({
+      method:'GET',
+      url:'api/v1/pwa/validate-option'
+    })
+    const authnOptions = {...validationOption.data.authnOptions}
+    console.log('v oprions**************',validationOption);
+    const {credentialId} = JSON.parse(localStorage.getItem('credential'));
+    console.log('id***********',credentialId);
+    authnOptions.challenge = new Uint8Array(authnOptions.challenge.data);
+    authnOptions.allowCredentials = [
+      {
+        id: base64ToBuffer(credentialId),
+        type: 'public-key',
+        transports: ['internal']
+      }
+    ];
+console.log('final authn options***********',authnOptions);
+    const credential = await navigator.credentials.get({
+      publicKey: authnOptions
+    });
   }
   return (
     <>
