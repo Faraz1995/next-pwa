@@ -221,7 +221,6 @@ console.log('final authn options***********',authnOptions);
     setStatus('before verify call')
     const verifyRes = (await fetch(`api/v1/pwa/verify`, {
       method: 'POST',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
