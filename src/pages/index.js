@@ -228,7 +228,7 @@ export default function Home() {
       credentials: 'include'
     })
       .then((res) => {
-        setStatus('res**********')
+        setStatus(res.msg)
       })
       .catch((e) => {
         setStatus('error in fetch')
