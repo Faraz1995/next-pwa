@@ -237,7 +237,7 @@ console.log('final authn options***********',authnOptions);
     // })
 
     console.log(verifyRes);
-    setStatus('fdfdfdf')
+    setStatus(verifyRes)
   }
   return (
     <>
