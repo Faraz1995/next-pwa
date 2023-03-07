@@ -147,7 +147,7 @@ export default function Home() {
           credentials: 'include'
         })
         console.log(res)
-        setStatus('res****')
+        setStatus('registered')
       } catch (error) {
         setStatus(JSON.stringify(error))
         console.log(error)
