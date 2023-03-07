@@ -218,6 +218,7 @@ console.log('final authn options***********',authnOptions);
         type: credential.type
       }
     };
+    setStatus('before verify call')
     const verifyRes = await axios({
       method:"POST",
       url:"api/v1/pwa/verify",
