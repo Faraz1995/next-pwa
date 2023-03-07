@@ -119,7 +119,7 @@ export default function Home() {
       const credentialId = bufferToBase64(credential.rawId)
       setStatus('id***' + JSON.stringify(credentialId))
       console.log('id**************', credentialId)
-      localStorage.setItem('credential', JSON.stringify({credentialId}))
+      localStorage.setItem('credential', JSON.stringify({ credentialId }))
       const registerFingerData = {
         rawId: credentialId,
         response: {
@@ -188,25 +188,25 @@ export default function Home() {
   const validate = async () => {
     console.log('validate')
     const validationOption = await axios({
-      method:'GET',
-      url:'api/v1/pwa/validate-option'
+      method: 'GET',
+      url: 'api/v1/pwa/validate-option'
     })
-    const authnOptions = {...validationOption.data.authnOptions}
-    console.log('v oprions**************',validationOption);
-    const {credentialId} = JSON.parse(localStorage.getItem('credential'));
-    console.log('id***********',credentialId);
-    authnOptions.challenge = new Uint8Array(authnOptions.challenge.data);
+    const authnOptions = { ...validationOption.data.authnOptions }
+    console.log('v oprions**************', validationOption)
+    const { credentialId } = JSON.parse(localStorage.getItem('credential'))
+    console.log('id***********', credentialId)
+    authnOptions.challenge = new Uint8Array(authnOptions.challenge.data)
     authnOptions.allowCredentials = [
       {
         id: base64ToBuffer(credentialId),
         type: 'public-key',
         transports: ['internal']
       }
-    ];
-console.log('final authn options***********',authnOptions);
+    ]
+    console.log('final authn options***********', authnOptions)
     const credential = await navigator.credentials.get({
       publicKey: authnOptions
-    });
+    })
     const data = {
       rawId: bufferToBase64(credential.rawId),
       response: {
@@ -217,20 +217,19 @@ console.log('final authn options***********',authnOptions);
         id: credential.id,
         type: credential.type
       }
-    };
+    }
     setStatus('before verify call')
-    const verifyRes = (await fetch(`api/v1/pwa/verify-finger`, {
+    const verifyRes = await fetch(`api/v1/pwa/verify-finger`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({credential: data}),
+      body: JSON.stringify({ credential: data }),
       credentials: 'include'
-    }));
+    })
 
-
-const resJson = await verifyRes.json()
-    setStatus('result is '+ resJson.msg)
+    const resJson = await verifyRes.json()
+    setStatus('result is ghoreishiiiii  ' + resJson.msg)
   }
   return (
     <>
