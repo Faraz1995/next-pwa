@@ -229,8 +229,8 @@ console.log('final authn options***********',authnOptions);
     }));
 
 
-
-    setStatus('result is'+JSON.stringify(verifyRes.json()))
+const resJson = await verifyRes.json()
+    setStatus('result is '+ resJson.msg)
   }
   return (
     <>
