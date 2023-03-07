@@ -234,7 +234,7 @@ export default function Home() {
         setStatus('result is ghoreishiiiii  ' + data.msg)
       })
       .catch((e) => {
-        console.log('error in result ', e)
+        setStatus('errorororororororor ')
       })
   }
   return (
