@@ -228,8 +228,14 @@ export default function Home() {
       credentials: 'include'
     })
 
-    const resJson = await verifyRes.json()
-    setStatus('result is ghoreishiiiii  ' + resJson.msg)
+    verifyRes
+      .json()
+      .then((data) => {
+        setStatus('result is ghoreishiiiii  ' + data.msg)
+      })
+      .catch((e) => {
+        console.log('error in result ', e)
+      })
   }
   return (
     <>
