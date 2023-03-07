@@ -219,7 +219,7 @@ export default function Home() {
       }
     }
     setStatus('before verify call')
-    const verifyRes = await fetch(`api/v1/pwa/verify-finger`, {
+    fetch(`api/v1/pwa/verify-finger`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -227,14 +227,11 @@ export default function Home() {
       body: JSON.stringify({ credential: data }),
       credentials: 'include'
     })
-
-    verifyRes
-      .json()
-      .then((data) => {
-        setStatus('result is ghoreishiiiii  ' + data)
+      .then((res) => {
+        setStatus('res**********')
       })
       .catch((e) => {
-        setStatus('errorororororororor ')
+        setStatus('error in fetch')
       })
   }
   return (
