@@ -197,7 +197,9 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <div>{status}</div>
+          <div>
+            <p>{status}</p>
+          </div>
         </div>
         <div className={styles.btnBox}>
           <button onClick={register}>register finger</button>
