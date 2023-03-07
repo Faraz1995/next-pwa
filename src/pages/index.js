@@ -236,10 +236,8 @@ console.log('final authn options***********',authnOptions);
     //   body:JSON.stringify({credential: data}),
     // })
 
-    const dataRes = await verifyRes.data
 
-    console.log(dataRes.msg);
-    setStatus(dataRes.msg)
+    setStatus(verifyRes.data.msg)
   }
   return (
     <>
