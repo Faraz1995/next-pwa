@@ -231,7 +231,7 @@ export default function Home() {
     verifyRes
       .json()
       .then((data) => {
-        setStatus('result is ghoreishiiiii  ' + data.msg)
+        setStatus('result is ghoreishiiiii  ' + data)
       })
       .catch((e) => {
         setStatus('errorororororororor ')
