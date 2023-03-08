@@ -219,21 +219,36 @@ export default function Home() {
       }
     }
     setStatus('before verify call')
-    fetch(`api/v1/pwa/verify-finger`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ credential: data }),
-      credentials: 'include'
-    })
-      .then((res) => {
-        
-        setStatus('then***********'+JSON.parse(res).msg)
-      })
-      .catch((e) => {
-        setStatus('error in fetch')
-      })
+try {
+  const verifyRes = await axios({
+    method: 'post',
+    url: 'api/v1/pwa/verify-finger',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: JSON.stringify({ credential: data }), // This is the body part
+    withCredentials: true
+  })
+  setStatus(verifyRes.data.result.msg)
+} catch (error) {
+  setStatus('error in axios')
+}
+    
+
+    // fetch(`api/v1/pwa/verify-finger`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ credential: data }),
+    //   credentials: 'include'
+    // })
+    //   .then((res) => {
+    //     setStatus('then***********' + JSON.parse(res).msg)
+    //   })
+    //   .catch((e) => {
+    //     setStatus('error in fetch')
+    //   })
   }
   return (
     <>
