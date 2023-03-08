@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import {bufferToBase64 ,  base64ToBuffer} from '../../utils'
 
 export default function Home() {
   const [status, setStatus] = useState('start')
@@ -11,9 +12,6 @@ export default function Home() {
     crypto = window && (window.crypto || window.msCrypto) // for IE 11 compatibility
     subtle = crypto.subtle
   }
-
-  const bufferToBase64 = (buffer) => btoa(String.fromCharCode(...new Uint8Array(buffer)))
-  const base64ToBuffer = (base64) => Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
 
   const locallyGenerate = () => {
     // sample arguments for registration
@@ -131,21 +129,16 @@ export default function Home() {
       }
       try {
         setStatus('register')
-        // const registerRes = await axios({
-        //   method: 'post',
-        //   url: 'api/v1/pwa/register',
-        //   headers: {},
-        //   data: JSON.stringify({ credential: registerFingerData }) // This is the body part
-        // })
-
-        const res = await fetch(`api/v1/pwa/register`, {
-          method: 'POST',
+        const res = await axios({
+          method: 'post',
+          url: 'api/v1/pwa/register',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ credential: registerFingerData }),
-          credentials: 'include'
+          data: JSON.stringify({ credential: registerFingerData }), // This is the body part
+          withCredentials: true
         })
+
         console.log(res)
         setStatus('registered')
       } catch (error) {
@@ -158,33 +151,6 @@ export default function Home() {
     }
   }
 
-  function arrayBufferToPem(arrayBuffer, label) {
-    const base64 = arrayBufferToBase64(arrayBuffer)
-    return (
-      `-----BEGIN ${label}-----\n` +
-      chunkString(base64, 64) +
-      `\n-----END ${label}-----\n`
-    )
-  }
-
-  function chunkString(str, length) {
-    return str.match(new RegExp(`.{1,${length}}`, 'g')).join('\n')
-  }
-
-  function arrayBufferToBase64(arrayBuffer) {
-    let binary = ''
-    const bytes = new Uint8Array(arrayBuffer)
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i])
-    }
-    return window.btoa(binary)
-  }
-
-  const getPublicKey = async (rawId) => {
-    const publicKeyArrayBuffer = await subtle.exportKey('spki', rawId)
-    const publicKeyPem = arrayBufferToPem(publicKeyArrayBuffer, 'PUBLIC KEY')
-    console.log(publicKeyPem)
-  }
   const validate = async () => {
     console.log('validate')
     const validationOption = await axios({
@@ -219,36 +185,20 @@ export default function Home() {
       }
     }
     setStatus('before verify call')
-try {
-  const verifyRes = await axios({
-    method: 'post',
-    url: 'api/v1/pwa/verify-finger',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    data: JSON.stringify({ credential: data }), // This is the body part
-    withCredentials: true
-  })
-  setStatus(verifyRes.data.result.msg)
-} catch (error) {
-  setStatus('error in axios')
-}
-    
-
-    // fetch(`api/v1/pwa/verify-finger`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ credential: data }),
-    //   credentials: 'include'
-    // })
-    //   .then((res) => {
-    //     setStatus('then***********' + JSON.parse(res).msg)
-    //   })
-    //   .catch((e) => {
-    //     setStatus('error in fetch')
-    //   })
+    try {
+      const verifyRes = await axios({
+        method: 'post',
+        url: 'api/v1/pwa/verify-finger',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({ credential: data }), // This is the body part
+        withCredentials: true
+      })
+      setStatus(verifyRes.data.result.msg)
+    } catch (error) {
+      setStatus('error in axios')
+    }
   }
   return (
     <>
